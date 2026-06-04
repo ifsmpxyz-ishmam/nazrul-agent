@@ -360,9 +360,9 @@
                 <label>Your Name</label>
                 <input type="text" id="cName" name="name" placeholder="e.g. Rahim Karim" required />
               </div>
-              <div class="form-group">
+               <div class="form-group">
                 <label>Phone Number</label>
-                <input type="tel" id="cPhone" name="phone" placeholder="+880 1XXX-XXXXXX" required />
+                <input type="text" id="cPhone" name="phone" placeholder="01XXXXXXXXX" pattern="[0-9]{11}"maxlength="11"oninput="this.value=this.value.replace(/[^0-9]/g,'')"title="Please enter an 11-digit phone number"required/>
               </div>
             </div>
             <div class="form-group">
