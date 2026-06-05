@@ -172,7 +172,6 @@ a { text-decoration: none; color: inherit; }
   gap: 60px;
 }
 
-
 .hero-bg-pattern {
   position: absolute;
   inset: 0;
@@ -399,7 +398,7 @@ a { text-decoration: none; color: inherit; }
   gap: 60px;
   align-items: center;
 }
-.about-img { width: 100%; border-radius: 12px; object-fit: cover; }
+
 .about-left h2 {
   font-size: clamp(1.6rem, 2.5vw, 2.2rem);
   font-weight: 700;
@@ -644,9 +643,6 @@ a { text-decoration: none; color: inherit; }
   color: var(--text-muted);
   margin-top: 2px;
 }
-/* ================================
-   PROCESS SECTION
-================================ */
 .process-grid {
     display: flex;
     align-items: center;
@@ -655,6 +651,9 @@ a { text-decoration: none; color: inherit; }
     margin-top: 48px;
     flex-wrap: wrap;
 }
+/* ================================
+   PROCESS SECTION
+================================ */
 
 .process-card {
     background: rgba(255,255,255,0.04);
@@ -720,7 +719,6 @@ a { text-decoration: none; color: inherit; }
         max-width: 320px;
     }
 }
-
 /* ================================
    FAQ
 ================================ */
@@ -1067,4 +1065,60 @@ a { text-decoration: none; color: inherit; }
 
   .container { padding: 0 20px; }
   .section-light, .section-dark { padding: 60px 0; }
+}
+
+/* ================================
+   SVG ICON STYLES
+================================ */
+.service-icon {
+  width: 52px;
+  height: 52px;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.service-icon svg {
+  stroke: var(--gold);
+}
+
+.process-icon {
+  width: 48px;
+  height: 48px;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+}
+
+.process-icon svg {
+  stroke: var(--gold);
+}
+
+.contact-icon {
+  width: 40px;
+  height: 40px;
+  background: rgba(10,25,60,0.06);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.contact-icon svg {
+  stroke: var(--gold-dark);
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
