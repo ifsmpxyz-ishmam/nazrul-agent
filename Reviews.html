@@ -3,54 +3,99 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Client Reviews — Nazrul Islam Choudhury C&F Agent</title>
+
+  <!-- ── SEO ── -->
+  <title>Client Reviews — Nazrul Islam Choudhury C&amp;F Agent | Chittagong Port</title>
+  <meta name="description" content="Verified client reviews for Nazrul Islam Choudhury — Licensed C&amp;F Agent at Chittagong Port. Read honest feedback from importers and exporters we have served.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://capable-twilight-6cae0a.netlify.app/reviews.html">
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:title"       content="Client Reviews — Nazrul Islam Choudhury C&amp;F Agent">
+  <meta property="og:description" content="Verified reviews from businesses we have helped clear customs at Chittagong Port.">
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://capable-twilight-6cae0a.netlify.app/reviews.html">
+  <meta property="og:image"       content="https://capable-twilight-6cae0a.netlify.app/piclus.jpeg">
+  <meta property="og:image:alt"   content="Nazrul Islam Choudhury — Licensed C&amp;F Agent">
+  <meta property="og:site_name"   content="Global Logistics Network">
+  <meta property="og:locale"      content="en_US">
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="Client Reviews — Nazrul Islam Choudhury C&amp;F Agent">
+  <meta name="twitter:description" content="Verified reviews from businesses we have helped clear customs at Chittagong Port.">
+  <meta name="twitter:image"       content="https://capable-twilight-6cae0a.netlify.app/piclus.jpeg">
+
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+
   <style>
+    /* ── Reviews page–specific layout styles ── */
     .reviews-hero {
       background: var(--navy);
       padding: 120px 40px 60px;
       text-align: center;
+      position: relative;
+      overflow: hidden;
     }
+
+    .reviews-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 75% 20%, rgba(201,168,76,0.08) 0%, transparent 55%),
+        radial-gradient(circle at 20% 80%, rgba(201,168,76,0.05) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
     .reviews-hero h1 {
+      font-family: 'Playfair Display', serif;
       font-size: clamp(2rem, 4vw, 3rem);
       color: var(--white);
       margin-bottom: 12px;
+      position: relative;
     }
+
     .reviews-hero p {
       color: rgba(255,255,255,0.6);
       font-size: 1rem;
+      position: relative;
     }
+
     .reviews-page {
       background: var(--off-white);
-      padding: 60px 0;
+      padding: 60px 0 80px;
       min-height: 60vh;
     }
+
     .reviews-all-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 24px;
-      margin-top: 40px;
+      margin-top: 32px;
     }
-    .loading-state {
-      text-align: center;
-      padding: 60px;
-      color: var(--text-muted);
-      font-size: 1rem;
-      grid-column: 1 / -1;
-    }
-    .no-reviews {
-      text-align: center;
-      padding: 60px;
-      color: var(--text-muted);
-      grid-column: 1 / -1;
-    }
+
     .review-count {
       font-size: 0.88rem;
       color: var(--text-muted);
       margin-top: 8px;
     }
-    @media (max-width: 768px) {
+
+    .loading-state,
+    .no-reviews {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-muted);
+      font-size: 1rem;
+      grid-column: 1 / -1;
+    }
+
+    @media (max-width: 900px) {
+      .reviews-all-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 600px) {
       .reviews-all-grid { grid-template-columns: 1fr; }
       .reviews-hero { padding: 100px 20px 40px; }
     }
@@ -58,25 +103,41 @@
 </head>
 <body>
 
-  <!-- NAVBAR -->
-  <nav id="navbar">
+  <!-- ── NAVBAR ── -->
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
     <div class="nav-inner">
       <div class="nav-logo">
-        <span class="logo-text">Global Logistics Network</span>
+        <a href="index.html" class="logo-text" aria-label="Global Logistics Network — Home">Global Logistics Network</a>
       </div>
-      <ul class="nav-links">
+      <ul class="nav-links" role="list">
         <li><a href="index.html#about">About</a></li>
         <li><a href="index.html#services">Services</a></li>
         <li><a href="index.html#process">Process</a></li>
         <li><a href="index.html#faq">FAQ</a></li>
       </ul>
       <a href="index.html#contact" class="nav-cta">Contact Us</a>
-      <div class="hamburger" id="hamburger">
-        <span></span><span></span><span></span>
-      </div>
+      <button
+        class="hamburger"
+        id="hamburger"
+        type="button"
+        aria-label="Open navigation menu"
+        aria-expanded="false"
+        aria-controls="mobileMenu"
+      >
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </button>
     </div>
   </nav>
-  <div class="mobile-menu" id="mobileMenu">
+
+  <div
+    class="mobile-menu"
+    id="mobileMenu"
+    aria-hidden="true"
+    role="navigation"
+    aria-label="Mobile navigation"
+  >
     <a href="index.html#about">About</a>
     <a href="index.html#services">Services</a>
     <a href="index.html#process">Process</a>
@@ -84,37 +145,44 @@
     <a href="index.html#contact">Contact</a>
   </div>
 
-  <!-- HERO -->
-  <div class="reviews-hero">
+  <!-- ── PAGE HERO ── -->
+  <header class="reviews-hero" role="banner">
     <div class="section-tag light">Client Reviews</div>
     <h1>What Our Clients Say</h1>
-    <p>Honest reviews from businesses we have served at Chittagong Port.</p>
-  </div>
+    <p>Honest, verified reviews from businesses we have served at Chittagong Port.</p>
+  </header>
 
-  <!-- ALL REVIEWS -->
-  <section class="reviews-page">
+  <!-- ── ALL REVIEWS ── -->
+  <main class="reviews-page" id="main-content">
     <div class="container">
-      <div id="review-count" class="review-count"></div>
-      <div class="reviews-all-grid" id="all-reviews">
-        <div class="loading-state">Loading reviews...</div>
+      <p id="review-count" class="review-count" aria-live="polite"></p>
+      <div
+        class="reviews-all-grid"
+        id="all-reviews"
+        role="list"
+        aria-label="Client reviews"
+        aria-busy="true"
+      >
+        <!-- Reviews injected by JS; loading state set via aria-busy -->
+        <p class="loading-state" aria-live="polite">Loading reviews…</p>
       </div>
     </div>
-  </section>
+  </main>
 
-  <!-- FOOTER -->
-  <footer id="footer">
+  <!-- ── FOOTER ── -->
+  <footer id="footer" role="contentinfo">
     <div class="footer-top">
       <div class="footer-brand">
         <div class="footer-logo-wrap">
           <span class="footer-logo-text">Global Logistics Network</span>
-          <span class="footer-logo-sub">C&F Agent</span>
+          <span class="footer-logo-sub">C&amp;F Agent</span>
         </div>
         <p class="footer-tagline">Your trusted customs clearing partner at Chittagong Port since 2007.</p>
       </div>
       <div class="footer-cols">
         <div class="footer-col">
           <h4>Quick Links</h4>
-          <ul>
+          <ul role="list">
             <li><a href="index.html">Home</a></li>
             <li><a href="index.html#services">Services</a></li>
             <li><a href="index.html#contact">Contact</a></li>
@@ -123,78 +191,126 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2024 Nazrul Islam Choudhury C&F Agent. All rights reserved.</span>
+      <span>© 2024 Nazrul Islam Choudhury C&amp;F Agent. All rights reserved.</span>
       <a href="index.html" style="color:var(--gold)">← Back to Home</a>
     </div>
   </footer>
 
   <script>
-    // Airtable config
-    const TOKEN = 'patCVS8LLjijglKPR.da0c941593ddd1f5103f75c51b99c782c1b943ed9b78df5ba753ee0bf75ea52f';
-    const BASE_ID = 'app2Ej8l8tDNDGJ6X';
-    const TABLE = 'Table%201';
-
-    // Navbar scroll
+    /* ── Navbar scroll ── */
     const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-      navbar.classList.toggle('scrolled', window.scrollY > 60);
-    });
-
-    // Hamburger
-    const hamburger = document.getElementById('hamburger');
-    const mobileMenu = document.getElementById('mobileMenu');
-    hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
-
-    // Render stars
-    function renderStars(rating) {
-      const r = Math.round(rating) || 5;
-      return '★'.repeat(r) + '☆'.repeat(5 - r);
+    if (navbar) {
+      window.addEventListener('scroll', () => {
+        navbar.classList.toggle('scrolled', window.scrollY > 60);
+      }, { passive: true });
     }
 
-    // Fetch all approved reviews
+    /* ── Hamburger ── */
+    const hamburger  = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (hamburger && mobileMenu) {
+      function setOpen(open) {
+        mobileMenu.classList.toggle('open', open);
+        hamburger.setAttribute('aria-expanded', String(open));
+        mobileMenu.setAttribute('aria-hidden',  String(!open));
+        hamburger.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+      }
+      hamburger.addEventListener('click', () => setOpen(!mobileMenu.classList.contains('open')));
+      mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
+      document.addEventListener('click', e => {
+        if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) setOpen(false);
+      });
+    }
+
+    /* ── XSS-safe review card builder ── */
+    function buildCard(review) {
+      const rating   = Math.min(5, Math.max(1, review.rating || 5));
+      const initials = (review.name || 'A')
+        .split(' ').filter(Boolean).map(w => w[0].toUpperCase()).join('').slice(0, 2);
+
+      const card    = document.createElement('div');
+      card.className = 'testimonial-card';
+      card.setAttribute('role', 'listitem');
+
+      const stars   = document.createElement('div');
+      stars.className   = 'stars';
+      stars.textContent = '★'.repeat(rating) + '☆'.repeat(5 - rating);
+      stars.setAttribute('aria-label', rating + ' out of 5 stars');
+
+      const text    = document.createElement('p');
+      text.textContent = review.review; /* textContent — never interpreted as HTML */
+
+      const author  = document.createElement('div');
+      author.className = 'testimonial-author';
+
+      const avatar  = document.createElement('div');
+      avatar.className   = 'author-avatar';
+      avatar.textContent = initials;
+      avatar.setAttribute('aria-hidden', 'true');
+
+      const info    = document.createElement('div');
+
+      const nameEl  = document.createElement('div');
+      nameEl.className   = 'author-name';
+      nameEl.textContent = review.name || 'Anonymous';
+
+      const compEl  = document.createElement('div');
+      compEl.className   = 'author-company';
+      compEl.textContent = review.company || '';
+
+      info.appendChild(nameEl);
+      info.appendChild(compEl);
+      author.appendChild(avatar);
+      author.appendChild(info);
+      card.appendChild(stars);
+      card.appendChild(text);
+      card.appendChild(author);
+      return card;
+    }
+
+    /* ── Load all approved reviews via Netlify Function ── */
     async function loadAllReviews() {
       const container = document.getElementById('all-reviews');
-      const countEl = document.getElementById('review-count');
-      try {
-        const url = `https://api.airtable.com/v0/${BASE_ID}/${TABLE}?filterByFormula={Approved}=1&sort[0][field]=Name&sort[0][direction]=asc`;
-        const res = await fetch(url, {
-          headers: { 'Authorization': `Bearer ${TOKEN}` }
-        });
-        const data = await res.json();
-        const records = data.records || [];
+      const countEl   = document.getElementById('review-count');
 
-        if (records.length === 0) {
-          container.innerHTML = '<div class="no-reviews">No reviews yet. Be the first to leave a review!</div>';
+      try {
+        const res  = await fetch('/.netlify/functions/reviews');
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data    = await res.json();
+        const reviews = data.reviews || [];
+
+        container.setAttribute('aria-busy', 'false');
+        container.innerHTML = ''; // Clear loading placeholder
+
+        if (reviews.length === 0) {
+          const msg = document.createElement('p');
+          msg.className   = 'no-reviews';
+          msg.textContent = 'No reviews yet. Be the first to leave a review!';
+          container.appendChild(msg);
           return;
         }
 
-        countEl.textContent = records.length + ' verified client review' + (records.length > 1 ? 's' : '');
+        if (countEl) {
+          countEl.textContent =
+            reviews.length + ' verified client review' + (reviews.length !== 1 ? 's' : '');
+        }
 
-        container.innerHTML = records.map(r => {
-          const f = r.fields;
-          const initials = (f.Name || 'A').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
-          return `
-            <div class="testimonial-card">
-              <div class="stars">${renderStars(f.Rating)}</div>
-              <p>"${f.Review || ''}"</p>
-              <div class="testimonial-author">
-                <div class="author-avatar">${initials}</div>
-                <div>
-                  <div class="author-name">${f.Name || 'Anonymous'}</div>
-                  <div class="author-company">${f.Company || ''}</div>
-                </div>
-              </div>
-            </div>
-          `;
-        }).join('');
+        reviews.forEach(r => container.appendChild(buildCard(r)));
 
       } catch (err) {
-        container.innerHTML = '<div class="no-reviews">Failed to load reviews. Please try again later.</div>';
+        console.error('[reviews page] load error:', err);
+        if (container) {
+          container.setAttribute('aria-busy', 'false');
+          container.innerHTML = '';
+          const msg = document.createElement('p');
+          msg.className   = 'no-reviews';
+          msg.textContent = 'Failed to load reviews. Please try again later.';
+          container.appendChild(msg);
+        }
       }
     }
 
     loadAllReviews();
   </script>
-
 </body>
 </html>
