@@ -55,7 +55,7 @@ a { text-decoration: none; color: inherit; }
 .nav-inner {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 40px;
+  padding: 0 16px;
   height: 70px;
   display: flex;
   align-items: center;
@@ -65,7 +65,7 @@ a { text-decoration: none; color: inherit; }
 .nav-logo {
   display: flex;
   flex-direction: column;
-  line-height: 1.2;
+  line-height: 1.1;
 }
 
 .logo-text {
@@ -737,7 +737,7 @@ a { text-decoration: none; color: inherit; }
   transition: border-color 0.2s;
 }
 
-.faq-item:has(.faq-a.open) { border-color: rgba(201,168,76,0.4); }
+.faq-item.open .faq-a { display: block }  
 
 .faq-q {
   display: flex;
