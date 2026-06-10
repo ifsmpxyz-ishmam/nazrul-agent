@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Reviews — Nazrul Islam Choudhury C&F Agent</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .reviews-hero {
+      background: var(--navy);
+      padding: 120px 40px 60px;
+      text-align: center;
+    }
+    .reviews-hero h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+    .reviews-hero p {
+      color: rgba(255,255,255,0.6);
+      font-size: 1rem;
+    }
+    .reviews-page {
+      background: var(--off-white);
+      padding: 60px 0;
+      min-height: 60vh;
+    }
+    .reviews-all-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 40px;
+    }
+    .loading-state {
+      text-align: center;
+      padding: 60px;
+      color: var(--text-muted);
+      font-size: 1rem;
+      grid-column: 1 / -1;
+    }
+    .no-reviews {
+      text-align: center;
+      padding: 60px;
+      color: var(--text-muted);
+      grid-column: 1 / -1;
+    }
+    .review-count {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+    @media (max-width: 768px) {
+      .reviews-all-grid { grid-template-columns: 1fr; }
+      .reviews-hero { padding: 100px 20px 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <span class="logo-text">Global Logistics Network</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="index.html#process">Process</a></li>
+        <li><a href="index.html#faq">FAQ</a></li>
+      </ul>
+      <a href="index.html#contact" class="nav-cta">Contact Us</a>
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html#about">About</a>
+    <a href="index.html#services">Services</a>
+    <a href="index.html#process">Process</a>
+    <a href="index.html#faq">FAQ</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+
+  <!-- HERO -->
+  <div class="reviews-hero">
+    <div class="section-tag light">Client Reviews</div>
+    <h1>What Our Clients Say</h1>
+    <p>Honest reviews from businesses we have served at Chittagong Port.</p>
+  </div>
+
+  <!-- ALL REVIEWS -->
+  <section class="reviews-page">
+    <div class="container">
+      <div id="review-count" class="review-count"></div>
+      <div class="reviews-all-grid" id="all-reviews">
+        <div class="loading-state">Loading reviews...</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo-wrap">
+          <span class="footer-logo-text">Global Logistics Network</span>
+          <span class="footer-logo-sub">C&F Agent</span>
+        </div>
+        <p class="footer-tagline">Your trusted customs clearing partner at Chittagong Port since 2007.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 Nazrul Islam Choudhury C&F Agent. All rights reserved.</span>
+      <a href="index.html" style="color:var(--gold)">← Back to Home</a>
+    </div>
+  </footer>
+
+  <script>
+    // Airtable config
+    const TOKEN = 'patCVS8LLjijglKPR.da0c941593ddd1f5103f75c51b99c782c1b943ed9b78df5ba753ee0bf75ea52f';
+    const BASE_ID = 'app2Ej8l8tDNDGJ6X';
+    const TABLE = 'Table%201';
+
+    // Navbar scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Hamburger
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+
+    // Render stars
+    function renderStars(rating) {
+      const r = Math.round(rating) || 5;
+      return '★'.repeat(r) + '☆'.repeat(5 - r);
+    }
+
+    // Fetch all approved reviews
+    async function loadAllReviews() {
+      const container = document.getElementById('all-reviews');
+      const countEl = document.getElementById('review-count');
+      try {
+        const url = `https://api.airtable.com/v0/${BASE_ID}/${TABLE}?filterByFormula={Approved}=1&sort[0][field]=Name&sort[0][direction]=asc`;
+        const res = await fetch(url, {
+          headers: { 'Authorization': `Bearer ${TOKEN}` }
+        });
+        const data = await res.json();
+        const records = data.records || [];
+
+        if (records.length === 0) {
+          container.innerHTML = '<div class="no-reviews">No reviews yet. Be the first to leave a review!</div>';
+          return;
+        }
+
+        countEl.textContent = records.length + ' verified client review' + (records.length > 1 ? 's' : '');
+
+        container.innerHTML = records.map(r => {
+          const f = r.fields;
+          const initials = (f.Name || 'A').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+          return `
+            <div class="testimonial-card">
+              <div class="stars">${renderStars(f.Rating)}</div>
+              <p>"${f.Review || ''}"</p>
+              <div class="testimonial-author">
+                <div class="author-avatar">${initials}</div>
+                <div>
+                  <div class="author-name">${f.Name || 'Anonymous'}</div>
+                  <div class="author-company">${f.Company || ''}</div>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+      } catch (err) {
+        container.innerHTML = '<div class="no-reviews">Failed to load reviews. Please try again later.</div>';
+      }
+    }
+
+    loadAllReviews();
+  </script>
+
+</body>
+</html>
