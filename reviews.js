@@ -146,7 +146,7 @@ if (
     try {
       // Only return records where Approved = 1 (checked checkbox in Airtable)
       const filter = encodeURIComponent("AND({Approved}=1, {Review}!='')");
-      const sort   = encodeURIComponent('[{"field":"Created Time","direction":"desc"}]');
+      const sort   = encodeURIComponent('[{"field":"Created time","direction":"desc"}]');
       const url    = `${AIRTABLE_API}/${base}/${encodedTable}` +
                      `?filterByFormula=${filter}&sort=${sort}&maxRecords=100`;
 
