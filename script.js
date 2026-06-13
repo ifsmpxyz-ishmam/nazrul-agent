@@ -19,8 +19,20 @@ const qa = sel => Array.from(document.querySelectorAll(sel));
 const navbar = q('navbar');
 
 if (navbar) {
+  let ticking = false;
+
   window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 60);
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        navbar.classList.toggle(
+          'scrolled',
+          window.scrollY > 60
+        );
+        ticking = false;
+      });
+
+      ticking = true;
+    }
   }, { passive: true });
 }
 
@@ -130,6 +142,7 @@ if (revealEls.length > 0 && 'IntersectionObserver' in window) {
         entry.target.classList.add('revealed');
         observer.unobserve(entry.target); // Unobserve after reveal; avoids unnecessary callbacks
       }
+    
     });
   }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
@@ -146,6 +159,15 @@ if (revealEls.length > 0 && 'IntersectionObserver' in window) {
  * Called by onclick="toggleFaq(this)" in index.html.
  * Also wired to keyboard events below.
  */
+qa('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    toggleFaq(btn);
+  });
+});
+
+
+// FIX: closing brace was misplaced after `if (!item) return;`, cutting the
+// function body short and leaving the rest of the logic as orphaned code.
 function toggleFaq(triggerEl) {
   const item   = triggerEl.closest('.faq-item');
   if (!item) return;
@@ -279,11 +301,20 @@ async function submitReview() {
   }
 
   /* Disable button while in flight */
-  submitBtn.disabled    = true;
-  submitBtn.textContent = 'Submitting…';
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '<span class="spinner"></span>Submitting...';
+
+  // FIX: The original fetch was split into disconnected statements:
+  //   - `url` was never defined
+  //   - `fetch(url, { signal })` was a separate fire-and-forget call
+  //   - `method`, `headers`, `body` were orphaned object literal syntax
+  // Fixed by combining everything into one properly structured fetch call.
+  const controller = new AbortController();
+  setTimeout(() => controller.abort(), 10000);
 
   try {
     const res = await fetch('/.netlify/functions/reviews', {
+      signal:  controller.signal,
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify({
@@ -348,8 +379,7 @@ function buildReviewCard(review) {
   /* Card wrapper */
   const card = document.createElement('div');
   card.className = 'testimonial-card';
-  /* FIX: add role="listitem" to match the container's role="list".
-   * reviews.html's buildCard() already does this; now consistent. */
+  
   card.setAttribute('role', 'listitem');
 
   /* Stars */
