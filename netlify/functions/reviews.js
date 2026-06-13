@@ -7,7 +7,7 @@
  * Required env vars (set in Netlify Dashboard → Site Settings → Environment):
  *   AIRTABLE_TOKEN  — Personal Access Token (pat…)
  *   AIRTABLE_BASE   — Base ID (app…)
- *   AIRTABLE_TABLE  — Table name, e.g. "Table 1"
+ *   AIRTABLE_TABLE  — Your Airtable table name
  *
  * Routes:
  *   GET  /.netlify/functions/reviews   → returns approved reviews
