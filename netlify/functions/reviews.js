@@ -96,6 +96,9 @@ function jsonRes(statusCode, body, corsOrigin) {
 /* ── Main handler ─────────────────────────────────────────────────────────── */
 
 exports.handler = async (event) => {
+console.log('[debug] TOKEN:', process.env.AIRTABLE_TOKEN ? process.env.AIRTABLE_TOKEN.substring(0, 10) : 'UNDEFINED');
+  console.log('[debug] BASE:', process.env.AIRTABLE_BASE || 'UNDEFINED');
+  console.log('[debug] TABLE:', process.env.AIRTABLE_TABLE || 'UNDEFINED');
 
   /* Resolve the caller's origin once, at the top, for all responses */
   const requestOrigin = event.headers.origin || event.headers.Origin || '';
