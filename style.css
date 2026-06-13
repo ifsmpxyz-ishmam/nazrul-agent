@@ -33,6 +33,48 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; }
 
 a { text-decoration: none; color: inherit; }
 
+/*
+ * FIX: .skip-link was used in index.html but had zero CSS.
+ * Without these rules it rendered as a plain visible link at the top of the page.
+ * Now hidden off-screen until keyboard-focused, then slides into view.
+ */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  background: var(--gold);
+  color: var(--navy-dark);
+  padding: 8px 20px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  z-index: 9999;
+  border-radius: 0 0 6px 0;
+  transition: top 0.2s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.skip-link:focus {
+  top: 0;
+  outline: 3px solid var(--navy);
+  outline-offset: 2px;
+}
+
+/*
+ * FIX: .sr-only was used in index.html labels (e.g. "(required)") but had no CSS.
+ * Visually hidden but still readable by screen readers.
+ */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 /* ================================
    NAVBAR
 ================================ */
@@ -55,7 +97,7 @@ a { text-decoration: none; color: inherit; }
 .nav-inner {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 0 40px;
   height: 70px;
   display: flex;
   align-items: center;
@@ -65,7 +107,7 @@ a { text-decoration: none; color: inherit; }
 .nav-logo {
   display: flex;
   flex-direction: column;
-  line-height: 1.1;
+  line-height: 1.2;
 }
 
 .logo-text {
@@ -115,12 +157,29 @@ a { text-decoration: none; color: inherit; }
   transform: translateY(-1px);
 }
 
+/*
+ * FIX: <button> elements carry browser-default styles (border, background,
+ * padding, font). Without resetting them the hamburger renders with a visible
+ * box around it. These resets must be paired with the display rules below.
+ */
 .hamburger {
   display: none;
   flex-direction: column;
   gap: 5px;
   cursor: pointer;
+  /* Button default style resets */
+  background: none;
+  border: none;
+  padding: 6px 4px;
+  margin: 0;
+  line-height: 1;
+  -webkit-tap-highlight-color: transparent;
+  border-radius: 4px;
+  transition: background 0.2s;
 }
+
+.hamburger:hover  { background: rgba(201,168,76,0.1); }
+.hamburger:focus  { outline: 2px solid var(--gold); outline-offset: 2px; }
 
 .hamburger span {
   display: block;
@@ -184,7 +243,9 @@ a { text-decoration: none; color: inherit; }
 .hero-content { flex: 1; max-width: 600px; }
 
 .hero-badge {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   background: rgba(201,168,76,0.12);
   border: 1px solid rgba(201,168,76,0.3);
   color: var(--gold-light);
@@ -643,82 +704,69 @@ a { text-decoration: none; color: inherit; }
   color: var(--text-muted);
   margin-top: 2px;
 }
-.process-grid {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0;
-    margin-top: 48px;
-    flex-wrap: wrap;
-}
+
 /* ================================
    PROCESS SECTION
 ================================ */
+.process-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-top: 48px;
+  flex-wrap: wrap;
+}
 
 .process-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(201,168,76,0.15);
-    border-radius: 12px;
-    padding: 28px 20px;
-    text-align: center;
-    width: 200px;
-    transition: all 0.3s;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(201,168,76,0.15);
+  border-radius: 12px;
+  padding: 28px 20px;
+  text-align: center;
+  width: 200px;
+  transition: all 0.3s;
 }
 
 .process-card:hover {
-    background: rgba(201,168,76,0.08);
-    border-color: rgba(201,168,76,0.4);
-    transform: translateY(-4px);
+  background: rgba(201,168,76,0.08);
+  border-color: rgba(201,168,76,0.4);
+  transform: translateY(-4px);
 }
 
 .process-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.5rem;
-    font-weight: 900;
-    color: rgba(201,168,76,0.2);
-    line-height: 1;
-    margin-bottom: 8px;
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: rgba(201,168,76,0.2);
+  line-height: 1;
+  margin-bottom: 8px;
 }
 
 .process-icon {
-    font-size: 2rem;
-    margin-bottom: 12px;
+  font-size: 2rem;
+  margin-bottom: 12px;
 }
 
 .process-card h3 {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: var(--white);
-    margin-bottom: 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 8px;
 }
 
 .process-card p {
-    font-size: 0.82rem;
-    color: rgba(255,255,255,0.55);
-    line-height: 1.6;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.6;
 }
 
 .process-arrow {
-    font-size: 1.5rem;
-    color: var(--gold);
-    padding: 0 8px;
-    margin-bottom: 40px;
+  font-size: 1.5rem;
+  color: var(--gold);
+  padding: 0 8px;
+  margin-bottom: 40px;
 }
 
-@media (max-width: 768px) {
-    .process-grid {
-        flex-direction: column;
-        align-items: center;
-    }
-    .process-arrow {
-        transform: rotate(90deg);
-        margin: 0;
-    }
-    .process-card {
-        width: 100%;
-        max-width: 320px;
-    }
-}
 /* ================================
    FAQ
 ================================ */
@@ -737,7 +785,11 @@ a { text-decoration: none; color: inherit; }
   transition: border-color 0.2s;
 }
 
-.faq-item.open .faq-a { display: block }  
+/*
+ * FIX: was `.faq-item:has(.faq-a.open)` — JS adds class 'open' to .faq-item,
+ * never to .faq-a, so :has(.faq-a.open) never matched. Simplified to .faq-item.open.
+ */
+.faq-item.open { border-color: rgba(201,168,76,0.4); }
 
 .faq-q {
   display: flex;
@@ -769,7 +821,13 @@ a { text-decoration: none; color: inherit; }
   line-height: 1.8;
 }
 
-.faq-a.open { display: block; }
+/*
+ * FIX: was `.faq-a.open { display: block }` — JS never adds 'open' to .faq-a,
+ * only to .faq-item. So every FAQ answer was permanently hidden. Now correctly
+ * matches `.faq-item.open .faq-a`, which shows the child answer when the parent
+ * item has the 'open' class (exactly what JS toggles).
+ */
+.faq-item.open .faq-a { display: block; }
 
 /* ================================
    CONTACT
@@ -1065,6 +1123,19 @@ a { text-decoration: none; color: inherit; }
 
   .container { padding: 0 20px; }
   .section-light, .section-dark { padding: 60px 0; }
+
+  .process-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+  .process-arrow {
+    transform: rotate(90deg);
+    margin: 0;
+  }
+  .process-card {
+    width: 100%;
+    max-width: 320px;
+  }
 }
 
 /* ================================
@@ -1082,9 +1153,7 @@ a { text-decoration: none; color: inherit; }
   margin-bottom: 16px;
 }
 
-.service-icon svg {
-  stroke: var(--gold);
-}
+.service-icon svg { stroke: var(--gold); }
 
 .process-icon {
   width: 48px;
@@ -1098,9 +1167,7 @@ a { text-decoration: none; color: inherit; }
   margin: 0 auto 12px;
 }
 
-.process-icon svg {
-  stroke: var(--gold);
-}
+.process-icon svg { stroke: var(--gold); }
 
 .contact-icon {
   width: 40px;
@@ -1113,15 +1180,7 @@ a { text-decoration: none; color: inherit; }
   flex-shrink: 0;
 }
 
-.contact-icon svg {
-  stroke: var(--gold-dark);
-}
-
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
+.contact-icon svg { stroke: var(--gold-dark); }
 
 /* ================================
    REVIEWS SECTION
@@ -1130,7 +1189,7 @@ a { text-decoration: none; color: inherit; }
   background: var(--off-white);
   padding: 90px 0;
 }
- 
+
 .reviews-preview-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1138,12 +1197,12 @@ a { text-decoration: none; color: inherit; }
   margin-top: 48px;
   margin-bottom: 32px;
 }
- 
+
 .show-more-wrap {
   text-align: center;
   margin-top: 32px;
 }
- 
+
 .btn-show-more {
   display: inline-block;
   background: var(--navy);
@@ -1157,13 +1216,13 @@ a { text-decoration: none; color: inherit; }
   transition: all 0.2s;
   border: 1.5px solid var(--navy);
 }
- 
+
 .btn-show-more:hover {
   background: var(--gold);
   color: var(--navy-dark);
   border-color: var(--gold);
 }
- 
+
 /* ================================
    SUBMIT REVIEW SECTION
 ================================ */
@@ -1171,7 +1230,7 @@ a { text-decoration: none; color: inherit; }
   background: var(--navy);
   padding: 90px 0;
 }
- 
+
 .review-form-wrap {
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(201,168,76,0.2);
@@ -1180,13 +1239,13 @@ a { text-decoration: none; color: inherit; }
   max-width: 640px;
   margin: 48px auto 0;
 }
- 
+
 .star-select {
   display: flex;
   gap: 8px;
   margin-bottom: 4px;
 }
- 
+
 .star-select span {
   font-size: 1.8rem;
   cursor: pointer;
@@ -1194,9 +1253,9 @@ a { text-decoration: none; color: inherit; }
   transition: color 0.15s;
   user-select: none;
 }
- 
+
 .star-select span.active { color: var(--gold); }
- 
+
 .review-input {
   width: 100%;
   padding: 11px 14px;
@@ -1210,10 +1269,10 @@ a { text-decoration: none; color: inherit; }
   transition: border-color 0.2s;
   margin-bottom: 16px;
 }
- 
+
 .review-input::placeholder { color: rgba(255,255,255,0.35); }
 .review-input:focus { border-color: var(--gold); }
- 
+
 .review-submit-btn {
   width: 100%;
   background: var(--gold);
@@ -1228,10 +1287,10 @@ a { text-decoration: none; color: inherit; }
   transition: all 0.2s;
   margin-top: 4px;
 }
- 
+
 .review-submit-btn:hover { background: var(--gold-light); }
 .review-submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
- 
+
 .review-success {
   display: none;
   margin-top: 16px;
@@ -1245,7 +1304,7 @@ a { text-decoration: none; color: inherit; }
   text-align: center;
   line-height: 1.6;
 }
- 
+
 .form-label-dark {
   font-size: 0.78rem;
   font-weight: 700;
@@ -1255,15 +1314,60 @@ a { text-decoration: none; color: inherit; }
   display: block;
   margin-bottom: 6px;
 }
- 
+
 .reviews-loading {
   text-align: center;
   padding: 40px;
   color: var(--text-muted);
   grid-column: 1/-1;
 }
- 
+
 @media (max-width: 768px) {
   .reviews-preview-grid { grid-template-columns: 1fr; }
   .review-form-wrap { padding: 24px; }
+}
+
+
+/* ================================
+   ACCESSIBILITY UTILITIES
+================================ */
+
+/*
+ * FIX: invalid form fields get aria-invalid="true" from script.js
+ * but had no visual indicator. Red border makes the error state obvious.
+ */
+input[aria-invalid="true"],
+textarea[aria-invalid="true"] {
+  border-color: #e05252 !important;
+  background: rgba(224, 82, 82, 0.05) !important;
+}
+
+/*
+ * FIX: #ratingError is shown/hidden by script.js (style.display).
+ * Setting display:none here establishes the hidden default. The inline
+ * style set by JS (display:block) overrides this when shown.
+ */
+.rating-error {
+  display: none;
+  color: #ff8a8a;
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-top: 4px;
+  margin-bottom: 12px;
+}
+
+/*
+ * FIX: honeypot field must be visually hidden from real users.
+ * Using absolute positioning off-screen (not display:none or visibility:hidden,
+ * as some bots check for those and skip such fields deliberately).
+ */
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+  
 }
