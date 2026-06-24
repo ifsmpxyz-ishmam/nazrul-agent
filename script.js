@@ -469,3 +469,309 @@ async function loadReviewsPreview() {
 if (q('reviews-preview')) {
   loadReviewsPreview();
 }
+/*
+ * ══════════════════════════════════════════════════════════
+ * STEP 2 — script.js
+ * Find your existing handleFileSelect() and clearFile()
+ * functions and REPLACE BOTH with everything below.
+ * ══════════════════════════════════════════════════════════
+ */
+
+/* ── Multi-file upload state ──────────────────────────────────────────────── */
+
+let   selectedFiles = [];   // Array of File objects tracked in memory
+const MAX_FILES     = 4;    // Maximum files allowed
+const MAX_BYTES     = 10 * 1024 * 1024;  // 10 MB per file
+
+/* ── Extension → emoji icon map ──────────────────────────────────────────── */
+
+function fileIcon(filename) {
+  const ext = filename.split('.').pop().toLowerCase();
+  if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext)) return '🖼';
+  if (ext === 'pdf') return '📄';
+  if (['doc', 'docx'].includes(ext)) return '📝';
+  return '📎';
+}
+
+/* ── Write selectedFiles back into the real <input> via DataTransfer ──────── */
+/*    This ensures Netlify receives the files on form submit.                  */
+
+function syncInputFiles() {
+  const input = document.getElementById('cFile');
+  if (!input) return;
+  try {
+    const dt = new DataTransfer();
+    selectedFiles.forEach(f => dt.items.add(f));
+    input.files = dt.files;
+  } catch (e) {
+    /* DataTransfer assignment not supported in very old browsers — fail silently.
+     * Files are still tracked in selectedFiles[] for display purposes. */
+    console.warn('[fileUpload] DataTransfer assignment not supported:', e.message);
+  }
+}
+
+/* ── Called by onchange on the <input> ───────────────────────────────────── */
+
+function handleFileSelect(input) {
+  const incoming = Array.from(input.files);
+
+  /* Reset input immediately so the same file can be selected again after removal */
+  input.value = '';
+
+  const skipped = [];
+
+  for (const file of incoming) {
+    /* Slot limit */
+    if (selectedFiles.length >= MAX_FILES) {
+      skipped.push(`"${file.name}" — max ${MAX_FILES} files reached.`);
+      continue;
+    }
+    /* Size limit */
+    if (file.size > MAX_BYTES) {
+      skipped.push(`"${file.name}" — exceeds 10 MB.`);
+      continue;
+    }
+    /* Duplicate guard (same name + size) */
+    const isDupe = selectedFiles.some(f => f.name === file.name && f.size === file.size);
+    if (isDupe) continue;
+
+    selectedFiles.push(file);
+  }
+
+  if (skipped.length) {
+    alert('Some files were skipped:\n\n' + skipped.join('\n'));
+  }
+
+  syncInputFiles();
+  renderFileChips();
+}
+
+/* ── Remove one file by its index in selectedFiles[] ─────────────────────── */
+
+function removeFile(index) {
+  selectedFiles.splice(index, 1);
+  syncInputFiles();
+  renderFileChips();
+}
+
+/* ── Clear all selected files ────────────────────────────────────────────── */
+
+function clearFile() {
+  selectedFiles = [];
+  syncInputFiles();
+  renderFileChips();
+}
+
+/* ── Render the chip list and update the button label ────────────────────── */
+
+function renderFileChips() {
+  const label    = document.getElementById('fileLabel');
+  const countBadge = document.getElementById('fileCount');
+  const btnWrap  = document.querySelector('.file-upload-btn');
+  const clearBtn = document.getElementById('fileClearBtn');
+  const listEl   = document.getElementById('fileList');
+
+  /* ── Empty state ── */
+  if (selectedFiles.length === 0) {
+    if (label)    label.textContent = 'Choose Files';
+    if (countBadge) countBadge.style.display = 'none';
+    if (btnWrap)  btnWrap.classList.remove('has-file');
+    if (clearBtn) clearBtn.style.display = 'none';
+    if (listEl)   listEl.innerHTML = '';
+    return;
+  }
+
+  /* ── Populated state ── */
+  if (label) label.textContent = 'Add More';
+  if (countBadge) {
+    countBadge.textContent = `${selectedFiles.length}/${MAX_FILES}`;
+    countBadge.style.display = 'inline-flex';
+  }
+  if (btnWrap)  btnWrap.classList.add('has-file');
+  if (clearBtn) clearBtn.style.display = 'flex';
+  if (!listEl)  return;
+
+  /* Rebuild chip list every time (simple & safe for ≤4 items) */
+  listEl.innerHTML = '';
+
+  selectedFiles.forEach((file, i) => {
+    const sizeMB   = (file.size / (1024 * 1024)).toFixed(1);
+    const safeName = file.name.length > 30 ? file.name.slice(0, 27) + '…' : file.name;
+
+    const chip = document.createElement('div');
+    chip.className = 'file-chip';
+    chip.setAttribute('role', 'listitem');
+
+    /* Icon */
+    const icon = document.createElement('span');
+    icon.className   = 'file-chip-icon';
+    icon.textContent = fileIcon(file.name);
+    icon.setAttribute('aria-hidden', 'true');
+
+    /* Name */
+    const name = document.createElement('span');
+    name.className   = 'file-chip-name';
+    name.textContent = safeName;
+    name.title       = file.name;   // Full name on hover
+
+    /* Size */
+    const size = document.createElement('span');
+    size.className   = 'file-chip-size';
+    size.textContent = `${sizeMB} MB`;
+
+    /* Remove button */
+    const removeBtn = document.createElement('button');
+    removeBtn.type      = 'button';
+    removeBtn.className = 'file-chip-remove';
+    removeBtn.setAttribute('aria-label', `Remove ${file.name}`);
+    removeBtn.innerHTML = '&times;';
+    /* Capture index in closure */
+    removeBtn.addEventListener('click', (function(idx) {
+      return function() { removeFile(idx); };
+    })(i));
+
+    chip.appendChild(icon);
+    chip.appendChild(name);
+    chip.appendChild(size);
+    chip.appendChild(removeBtn);
+    listEl.appendChild(chip);
+  });
+}
+/* ─────────────────────────────────────────────
+   Contact Form Validation — Global Logistics Network
+───────────────────────────────────────────── */
+
+(function () {
+  'use strict';
+
+  /* ── Config: field ID → validation rule + error message ── */
+  const RULES = {
+    cName: {
+      test: v => v.trim().length >= 2,
+      msg:  'Please enter your full name (at least 2 characters).',
+    },
+    cPhone: {
+      test: v => /^[0-9]{11}$/.test(v.trim()),
+      msg:  'Please enter a valid 11-digit phone number.',
+    },
+    cEmail: {
+      test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()),
+      msg:  'Please enter a valid email address.',
+    },
+    cService: {
+      test: v => v.trim() !== '',
+      msg:  'Please select the service you need.',
+    },
+    cMessage: {
+      test: v => v.trim().length >= 10,
+      msg:  'Please describe your request (at least 10 characters).',
+    },
+  };
+
+  /* ── Helpers ── */
+  function getField(id)    { return document.getElementById(id); }
+  function getErrorEl(id)  { return document.getElementById(id + '-err'); }
+
+  function showError(id, msg) {
+    const field = getField(id);
+    if (!field) return;
+
+    field.classList.add('cf-invalid');
+    field.setAttribute('aria-invalid', 'true');
+    field.setAttribute('aria-describedby', id + '-err');
+
+    let err = getErrorEl(id);
+    if (!err) {
+      err = document.createElement('span');
+      err.id        = id + '-err';
+      err.className = 'cf-error-msg';
+      err.setAttribute('role', 'alert');
+      field.parentNode.appendChild(err);
+    }
+    err.textContent = msg;
+  }
+
+  function clearError(id) {
+    const field = getField(id);
+    if (!field) return;
+
+    field.classList.remove('cf-invalid');
+    field.removeAttribute('aria-invalid');
+    field.removeAttribute('aria-describedby');
+
+    const err = getErrorEl(id);
+    if (err) err.textContent = '';
+  }
+
+  function validateOne(id) {
+    const field = getField(id);
+    if (!field) return true;
+    const rule = RULES[id];
+    if (!rule) return true;
+
+    if (rule.test(field.value)) {
+      clearError(id);
+      return true;
+    } else {
+      showError(id, rule.msg);
+      return false;
+    }
+  }
+
+  /* ── Wire up real-time feedback (validate on blur, clear on input) ── */
+  function attachListeners() {
+    Object.keys(RULES).forEach(id => {
+      const field = getField(id);
+      if (!field) return;
+
+      /* Validate when user leaves the field */
+      field.addEventListener('blur', () => validateOne(id));
+
+      /* Clear the error as soon as the user starts correcting */
+      field.addEventListener('input',  () => { if (field.classList.contains('cf-invalid')) validateOne(id); });
+      field.addEventListener('change', () => { if (field.classList.contains('cf-invalid')) validateOne(id); });
+    });
+  }
+
+  /* ── Intercept submit ── */
+  function attachSubmit() {
+    const form = document.getElementById('contactForm');
+    if (!form) return;
+
+    form.addEventListener('submit', function (e) {
+      let allValid = true;
+      let firstInvalidField = null;
+
+      Object.keys(RULES).forEach(id => {
+        const ok = validateOne(id);
+        if (!ok) {
+          allValid = false;
+          if (!firstInvalidField) firstInvalidField = getField(id);
+        }
+      });
+
+      if (!allValid) {
+        e.preventDefault();           /* Stop submission */
+        e.stopPropagation();
+
+        /* Scroll smoothly to the first broken field and focus it */
+        if (firstInvalidField) {
+          firstInvalidField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          firstInvalidField.focus();
+        }
+      }
+    });
+  }
+
+  /* ── Init ── */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+  function init() {
+    attachListeners();
+    attachSubmit();
+  }
+})();
