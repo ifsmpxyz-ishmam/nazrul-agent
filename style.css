@@ -1371,3 +1371,116 @@ textarea[aria-invalid="true"] {
   pointer-events: none;
   
 }
+/* ================================
+   FILE UPLOAD
+================================ */
+.file-input-hidden {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.file-upload-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.file-upload-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  border: 1.5px dashed #d0ccc4;
+  border-radius: 8px;
+  background: #fafafa;
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: all 0.2s;
+  flex: 1;
+  font-family: inherit;
+}
+
+.file-upload-btn:hover {
+  border-color: var(--gold);
+  color: var(--navy);
+  background: rgba(201,168,76,0.04);
+}
+
+.file-upload-btn.has-file {
+  border-color: var(--gold);
+  border-style: solid;
+  background: rgba(201,168,76,0.06);
+  color: var(--navy);
+}
+
+.file-upload-btn svg {
+  flex-shrink: 0;
+  stroke: var(--gold-dark);
+}
+
+.file-clear-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid #e5e5e5;
+  background: var(--white);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+.file-clear-btn:hover {
+  background: #fee2e2;
+  border-color: #fca5a5;
+}
+
+.file-clear-btn svg { stroke: #ef4444; }
+
+.file-hint {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 5px;
+  display: block;
+  line-height: 1.5;
+}
+/* ─────────────────────────────────────────────
+   Form Validation Error Styles
+   Paste these rules into your style.css
+───────────────────────────────────────────── */
+
+/* Red border on invalid fields */
+.contact-form input.cf-invalid,
+.contact-form select.cf-invalid,
+.contact-form textarea.cf-invalid {
+  border-color: #e53935 !important;
+  background-color: rgba(229, 57, 53, 0.04) !important;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.15);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Inline error message */
+.cf-error-msg {
+  display: block;
+  color: #e53935;
+  font-size: 0.72rem;
+  font-weight: 500;
+  margin-top: 5px;
+  letter-spacing: 0.01em;
+  min-height: 1em; /* prevents layout jump */
+}
+
+/* Remove red ring once corrected (smooth transition) */
+.contact-form input:not(.cf-invalid),
+.contact-form select:not(.cf-invalid),
+.contact-form textarea:not(.cf-invalid) {
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
