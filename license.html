@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>License & Credentials — Nazrul Islam Choudhury C&F Agent</title>
+  <meta name="description" content="Official license and credentials of Nazrul Islam Choudhury — Licensed C&F Agent at Chittagong Port under The Customs Act, 1969.">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+
+    /* ── PAGE HERO ── */
+    .license-hero {
+      background: var(--navy);
+      padding: 130px 40px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .license-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 75% 20%, rgba(201,168,76,0.09) 0%, transparent 55%),
+        radial-gradient(circle at 20% 80%, rgba(201,168,76,0.05) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .license-hero h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--white);
+      margin-bottom: 14px;
+      position: relative;
+    }
+    .license-hero p {
+      color: rgba(255,255,255,0.6);
+      font-size: 1rem;
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.8;
+      position: relative;
+    }
+
+    /* ── LICENSE SECTION ── */
+    .license-page { background: var(--off-white); padding: 80px 0; }
+
+    .license-card-wrap { max-width: 880px; margin: 0 auto 0; }
+
+    .license-card {
+      background: var(--white);
+      border-radius: 20px;
+      box-shadow: 0 8px 48px rgba(10,25,60,0.10);
+      border: 1px solid rgba(10,25,60,0.06);
+      overflow: hidden;
+    }
+
+   .license-card-header {
+  background: var(--navy);
+  padding: 28px 40px;     
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  border-bottom: 3px solid var(--gold);
+  /* ← remove overflow: hidden entirely */
+}
+
+.license-seal {
+  width: 88px;
+  height: 88px;
+  background: #fff url('cpa.png') no-repeat center center;
+  background-size: contain;
+  border: 2px solid rgba(201,168,76,.25);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.license-seal img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+    .license-card-header-text h2 {
+      font-size: 1.1rem; color: var(--white); font-weight: 700; margin-bottom: 4px;
+    }
+    .license-card-header-text p {
+      font-size: 0.78rem; color: var(--gold-light);
+      letter-spacing: 0.08em; text-transform: uppercase;
+    }
+
+    .license-card-body {
+      padding: 36px;
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .license-agent-col {
+      display: flex; flex-direction: column; gap: 16px;
+    }
+
+    .license-photo-wrap {
+      width: 150px; height: 180px;
+      border-radius: 10px; overflow: hidden;
+      border: 3px solid var(--gold);
+      box-shadow: 0 4px 20px rgba(10,25,60,0.15);
+    }
+    .license-photo-wrap img {
+      width: 100%; height: 100%; object-fit: cover; object-position: top center;
+    }
+    .license-agent-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-weight: 700; color: var(--navy); line-height: 1.3;
+    }
+    .license-agent-sub {
+      font-size: 0.72rem; color: var(--gold-dark);
+      font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    }
+
+    .license-details-col {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px 32px;
+    }
+
+    .license-field { display: flex; flex-direction: column; gap: 4px; }
+    .license-field-label {
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted);
+    }
+    .license-field-value {
+      font-size: 0.9rem; font-weight: 600; color: var(--navy); line-height: 1.4;
+    }
+    .license-field-value.mono {
+      font-family: monospace; font-size: 0.92rem; letter-spacing: 0.04em;
+    }
+
+    .license-badge-row { display: flex; flex-wrap: wrap; gap: 6px; grid-column: 1 / -1; }
+    .license-badge {
+      background: rgba(10,25,60,0.05); border: 1px solid rgba(10,25,60,0.1);
+      border-radius: 4px; padding: 3px 9px;
+      font-size: 0.7rem; font-weight: 600; color: var(--navy);
+    }
+
+    .license-card-footer {
+      background: #fafaf8; border-top: 1px solid #f0ede8;
+      padding: 18px 36px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .license-footer-note {
+      font-size: 0.78rem; color: var(--text-muted);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .license-verified {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(29,158,117,0.08); border: 1px solid rgba(29,158,117,0.25);
+      border-radius: 50px; padding: 6px 14px;
+      font-size: 0.78rem; font-weight: 700; color: #1a8a68;
+    }
+
+    /* ── PORT SECTION ── */
+    .port-section { background: var(--navy); padding: 80px 0; }
+
+    .port-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 16px;
+      margin-top: 48px;
+    }
+
+    .port-card {
+      border-radius: 14px; overflow: hidden;
+      position: relative; cursor: pointer;
+    }
+    .port-card:hover .port-card-img { transform: scale(1.04); }
+
+    .port-card-img {
+      width: 100%; height: 100%; min-height: 220px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    /* Card 1 spans 2 rows on left */
+    .port-card-main {
+      grid-row: 1 / 3;
+    }
+    .port-card-main .port-card-img { min-height: 460px; }
+
+    .port-card-overlay {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(6,15,36,0.92));
+      padding: 28px 20px 18px;
+      transition: padding 0.3s;
+    }
+    .port-card:hover .port-card-overlay { padding-bottom: 22px; }
+
+    .port-card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 4px;
+    }
+    .port-card-sub { font-size: 0.72rem; color: var(--gold-light); letter-spacing: 0.04em; }
+
+    /* Port stats */
+    .port-stats {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 0; margin-top: 48px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 14px; overflow: hidden;
+    }
+    .port-stat {
+      padding: 28px 20px; text-align: center;
+      border-right: 1px solid rgba(201,168,76,0.1);
+    }
+    .port-stat:last-child { border-right: none; }
+    .port-stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 900; color: var(--gold);
+      line-height: 1; margin-bottom: 6px;
+    }
+    .port-stat-label { font-size: 0.78rem; color: rgba(255,255,255,0.5); line-height: 1.4; }
+
+    /* ── AUTHORITY CARDS ── */
+    .authority-section { background: var(--off-white); padding: 80px 0; }
+    .authority-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
+    .authority-card {
+      background: var(--white); border-radius: 14px; padding: 28px 24px;
+      border: 1px solid rgba(10,25,60,0.06);
+      box-shadow: 0 4px 20px rgba(10,25,60,0.05);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .authority-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(10,25,60,0.1); }
+    .authority-icon {
+      width: 48px; height: 48px; background: rgba(10,25,60,0.05);
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      margin-bottom: 16px;
+    }
+    .authority-icon svg { stroke: var(--navy); }
+    .authority-card h3 { font-size: 0.98rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .authority-card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.7; }
+
+    /* ── TIMELINE ── */
+    .timeline-section { background: var(--navy); padding: 80px 0; }
+    .timeline { max-width: 680px; margin: 48px auto 0; position: relative; }
+    .timeline::before {
+      content: ''; position: absolute; left: 20px; top: 0; bottom: 0;
+      width: 2px; background: rgba(201,168,76,0.2);
+    }
+    .timeline-item { display: flex; gap: 28px; margin-bottom: 36px; }
+    .timeline-dot {
+      width: 42px; height: 42px; background: var(--navy-dark);
+      border: 2px solid var(--gold); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; position: relative; z-index: 1;
+    }
+    .timeline-year { font-family: 'Playfair Display', serif; font-size: 0.65rem; font-weight: 900; color: var(--gold); }
+    .timeline-content { padding-top: 8px; }
+    .timeline-content h3 { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+    .timeline-content p { font-size: 0.85rem; color: rgba(255,255,255,0.55); line-height: 1.6; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .license-card-body { grid-template-columns: 1fr; }
+      .license-details-col { grid-template-columns: 1fr; }
+      .port-grid { grid-template-columns: 1fr; }
+      .port-card-main { grid-row: auto; }
+      .port-card-main .port-card-img { min-height: 240px; }
+      .port-card-img { min-height: 200px; }
+      .port-stats { grid-template-columns: repeat(2, 1fr); }
+      .port-stat:nth-child(2) { border-right: none; }
+      .port-stat:nth-child(3),
+      .port-stat:nth-child(4) { border-top: 1px solid rgba(201,168,76,0.1); }
+      .port-stat:nth-child(4) { border-right: none; }
+      .authority-grid { grid-template-columns: 1fr; }
+      .license-hero { padding: 100px 20px 60px; }
+      .license-card-header { padding: 20px 24px; }
+      .license-card-body { padding: 24px; }
+      .license-card-footer { padding: 16px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- NAVBAR -->
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <span class="logo-text">Global Logistics Network</span>
+      </div>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="index.html#process">Process</a></li>
+        <li><a href="reviews.html">Reviews</a></li>
+        <li><a href="index.html#faq">FAQ</a></li>
+      </ul>
+      <a href="index.html#contact" class="nav-cta">Contact Us</a>
+      <button class="hamburger" id="hamburger" type="button"
+        aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true" role="navigation" aria-label="Mobile navigation">
+    <a href="index.html#about">About</a>
+    <a href="index.html#services">Services</a>
+    <a href="index.html#process">Process</a>
+    <a href="reviews.html">Reviews</a>
+    <a href="index.html#faq">FAQ</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+
+  <!-- HERO -->
+  <header class="license-hero">
+    <div class="section-tag light">Official Credentials</div>
+    <h1>License &amp; Accreditation</h1>
+    <p>Fully licensed by Bangladesh Customs Authority under The Customs Act, 1969. Operating exclusively at Chittagong Port since 2007.</p>
+  </header>
+
+  <main id="main-content">
+
+    <!-- LICENSE CARD -->
+    <section class="license-page">
+      <div class="container">
+        <div class="license-card-wrap">
+          <div class="section-tag" style="margin-bottom:12px;">Official License</div>
+          <h2 class="section-title" style="margin-bottom:40px;">C&amp;F Agent License</h2>
+
+          <div class="license-card">
+
+            <div class="license-card-header">
+              <div class="license-seal" role="img" aria-label="Chittagong Port Authority official seal"></div>
+              <div class="license-card-header-text">
+                <h2>Bangladesh Customs Authority</h2>
+                <p>The Customs Act, 1969 (IV of 1969) · Section 207</p>
+              </div>
+            </div>
+
+            <div class="license-card-body">
+
+              <div class="license-agent-col">
+                <div class="license-photo-wrap">
+                  <img src="piclus.jpeg" alt="Nazrul Islam Choudhury — Licensed C&F Agent">
+                </div>
+                <div>
+                  <div class="license-agent-sub">Licensed Agent</div>
+                  <div class="license-agent-name">Nazrul Islam<br>Choudhury</div>
+                </div>
+              </div>
+
+              <div class="license-details-col">
+                <div class="license-field">
+                  <span class="license-field-label">License Reference No.</span>
+                  <span class="license-field-value mono">3892-2014</span>
+                </div>
+                <div class="license-field">
+                  <span class="license-field-label">Issuing Authority</span>
+                  <span class="license-field-value">Joint Commissioner of Customs, Chittagong</span>
+                </div>
+                <div class="license-field">
+                  <span class="license-field-label">License Type</span>
+                  <span class="license-field-value">Clearing &amp; Forwarding (C&amp;F) Agent</span>
+                </div>
+                <div class="license-field">
+                  <span class="license-field-label">Port of Operation</span>
+                  <span class="license-field-value">Chittagong Port</span>
+                </div>
+                <div class="license-field">
+                  <span class="license-field-label">Licensed Since</span>
+                  <span class="license-field-value">2007</span>
+                </div>
+                <div class="license-field">
+                  <span class="license-field-label">Legal Authority</span>
+                  <span class="license-field-value">The Customs Act, 1969 · Section 207(4)</span>
+                </div>
+                <div class="license-badge-row">
+                  <span class="license-badge">Import Clearance</span>
+                  <span class="license-badge">Export Clearance</span>
+                  <span class="license-badge">Documentation</span>
+                  <span class="license-badge">HS Classification</span>
+                  <span class="license-badge">Warehousing</span>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="license-card-footer">
+              <span class="license-footer-note">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                Licensed under Bangladesh Customs Authority
+              </span>
+              <span class="license-verified">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Verified &amp; Active
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHITTAGONG PORT SECTION -->
+    <section class="port-section">
+      <div class="container">
+        <div class="section-tag light">Our Port</div>
+        <h2 class="section-title light">Chittagong Port</h2>
+        <p class="section-sub">Bangladesh's largest and busiest seaport — handling over 90% of the country's international trade. We have operated here exclusively for 17+ years.</p>
+
+        <div class="port-grid">
+
+          <!-- Main large card -->
+          <div class="port-card port-card-main">
+            <img class="port-card-img" src="port1.jpg" alt="Container terminal aerial view — Chittagong Port" loading="lazy">
+            <div class="port-card-overlay">
+              <div class="port-card-title">Container Terminal</div>
+              <div class="port-card-sub">Where Every Shipment Begins &amp; Ends</div>
+            </div>
+          </div>
+
+          <!-- Two stacked cards on right -->
+          <div class="port-card">
+            <img class="port-card-img" src="port3.webp" alt="Chittagong Port aerial — cargo operations" loading="lazy">
+            <div class="port-card-overlay">
+              <div class="port-card-title">Chittagong Port</div>
+              <div class="port-card-sub">Aerial View — Bangladesh's Gateway</div>
+            </div>
+          </div>
+
+          <div class="port-card">
+            <img class="port-card-img" src="port2.webp" alt="Container yard — import export operations" loading="lazy">
+            <div class="port-card-overlay">
+              <div class="port-card-title">Container Yard</div>
+              <div class="port-card-sub">Import &amp; Export Operations</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Port Stats -->
+        <div class="port-stats">
+          <div class="port-stat">
+            <div class="port-stat-num">3M+</div>
+            <div class="port-stat-label">TEUs Handled<br>Annually</div>
+          </div>
+          <div class="port-stat">
+            <div class="port-stat-num">90%</div>
+            <div class="port-stat-label">Bangladesh's<br>Foreign Trade</div>
+          </div>
+          <div class="port-stat">
+            <div class="port-stat-num">19</div>
+            <div class="port-stat-label">General Berths<br>Available</div>
+          </div>
+          <div class="port-stat">
+            <div class="port-stat-num">17+</div>
+            <div class="port-stat-label">Years We've<br>Operated Here</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- AUTHORITY & COMPLIANCE -->
+    <section class="authority-section">
+      <div class="container">
+        <div class="section-tag">Compliance</div>
+        <h2 class="section-title">Authority &amp; Compliance</h2>
+        <p class="section-sub dark">We operate under strict regulatory guidelines ensuring full legal compliance for every shipment.</p>
+
+        <div class="authority-grid">
+          <div class="authority-card">
+            <div class="authority-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h3>The Customs Act, 1969</h3>
+            <p>Fully licensed under Section 207(4) of The Customs Act, 1969 (IV of 1969). All operations comply with Bangladesh customs law and regulations.</p>
+          </div>
+          <div class="authority-card">
+            <div class="authority-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <h3>NBR Registered</h3>
+            <p>Registered with the National Board of Revenue (NBR) of Bangladesh. All tax and duty assessments handled transparently and correctly.</p>
+          </div>
+          <div class="authority-card">
+            <div class="authority-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <h3>17+ Years Track Record</h3>
+            <p>Continuous operation since 2007 with zero major compliance violations. A proven track record that clients and customs officials trust.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE TIMELINE -->
+    <section class="timeline-section">
+      <div class="container">
+        <div class="section-tag light">Our Journey</div>
+        <h2 class="section-title light">17 Years of Excellence</h2>
+        <p class="section-sub">From a single agent to one of Chittagong Port's most trusted C&amp;F services.</p>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot"><span class="timeline-year">2007</span></div>
+            <div class="timeline-content">
+              <h3>Licensed &amp; Established</h3>
+              <p>Received official C&amp;F Agent license from Bangladesh Customs Authority. Began operations at Chittagong Port.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"><span class="timeline-year">2010</span></div>
+            <div class="timeline-content">
+              <h3>First 1,000 Clients</h3>
+              <p>Reached the milestone of 1,000 satisfied clients — built primarily on referrals and word-of-mouth reputation.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"><span class="timeline-year">2015</span></div>
+            <div class="timeline-content">
+              <h3>10,000+ Shipments Cleared</h3>
+              <p>Surpassed 10,000 successful shipment clearances. Expanded expertise in HS Code Classification and bonded warehousing.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"><span class="timeline-year">2020</span></div>
+            <div class="timeline-content">
+              <h3>7,000+ Active Clients</h3>
+              <p>Grew to serve over 7,000 importers and exporters — from small businesses to large garment manufacturers.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"><span class="timeline-year">2024</span></div>
+            <div class="timeline-content">
+              <h3>17 Years &amp; Still Growing</h3>
+              <p>Continuing to serve Chittagong Port with the same dedication, now with a digital presence and 90% on-time clearance rate.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer id="footer" role="contentinfo">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo-wrap">
+          <span class="footer-logo-text">Global Logistics Network</span>
+          <span class="footer-logo-sub">C&amp;F Agent</span>
+        </div>
+        <p class="footer-tagline">Your trusted customs clearing partner at Chittagong Port since 2007.</p>
+        <nav class="footer-socials" aria-label="Social media links">
+          <a href="#" class="social-btn">Facebook</a>
+          <a href="https://wa.me/8801711395730" class="social-btn" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          <a href="#" class="social-btn">LinkedIn</a>
+        </nav>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Pages</h4>
+          <ul role="list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="reviews.html">Reviews</a></li>
+            <li><a href="license.html">License</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul role="list">
+            <li><a href="index.html#services">Import Clearance</a></li>
+            <li><a href="index.html#services">Export Clearance</a></li>
+            <li><a href="index.html#services">Documentation</a></li>
+            <li><a href="index.html#services">HS Classification</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 Nazrul Islam Choudhury C&amp;F Agent. All rights reserved.</span>
+      <a href="index.html" style="color:var(--gold)">← Back to Home</a>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/8801711395730" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    if (navbar) {
+      window.addEventListener('scroll', () => {
+        navbar.classList.toggle('scrolled', window.scrollY > 60);
+      }, { passive: true });
+    }
+    const hamburger  = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (hamburger && mobileMenu) {
+      function setOpen(open) {
+        mobileMenu.classList.toggle('open', open);
+        hamburger.setAttribute('aria-expanded', String(open));
+        mobileMenu.setAttribute('aria-hidden', String(!open));
+      }
+      hamburger.addEventListener('click', () => setOpen(!mobileMenu.classList.contains('open')));
+      mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
+      document.addEventListener('click', e => {
+        if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) setOpen(false);
+      });
+    }
+  </script>
+
+</body>
+</html>
