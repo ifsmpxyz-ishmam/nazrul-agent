@@ -464,11 +464,9 @@ if (q('reviews-preview')) {
 
 /* ── Multi-file upload state ──────────────────────────────────────────────── */
 
-let   selectedFiles = [];          // Array of File objects tracked in memory
-const MAX_FILES     = 4;           // Maximum files allowed
-const MAX_BYTES     = 10 * 1024 * 1024; // 10 MB per file
-
-/* ── Extension → emoji icon map ──────────────────────────────────────────── */
+let   selectedFiles = [];
+const MAX_FILES     = 4;
+const MAX_BYTES     = 10 * 1024 * 1024;
 
 function fileIcon(filename) {
   const ext = filename.split('.').pop().toLowerCase();
@@ -477,9 +475,6 @@ function fileIcon(filename) {
   if (['doc', 'docx'].includes(ext))                        return '📝';
   return '📎';
 }
-
-/* ── Write selectedFiles[] back into the real <input> via DataTransfer ───── */
-/*    This ensures web3forms receives the files on form submit.               */
 
 function syncInputFiles() {
   const input = q('cFile');
@@ -493,31 +488,23 @@ function syncInputFiles() {
   }
 }
 
-/* ── Called by onchange on the <input> ───────────────────────────────────── */
-
 function handleFileSelect(input) {
   const incoming = Array.from(input.files);
-
-  /* Reset input immediately so the same file can be selected again after removal */
   input.value = '';
 
   const skipped = [];
 
   for (const file of incoming) {
-    /* Slot limit */
     if (selectedFiles.length >= MAX_FILES) {
       skipped.push(`"${file.name}" — max ${MAX_FILES} files reached.`);
       continue;
     }
-    /* Size limit */
     if (file.size > MAX_BYTES) {
       skipped.push(`"${file.name}" — exceeds 10 MB.`);
       continue;
     }
-    /* Duplicate guard (same name + size) */
     const isDupe = selectedFiles.some(f => f.name === file.name && f.size === file.size);
     if (isDupe) continue;
-
     selectedFiles.push(file);
   }
 
@@ -529,23 +516,17 @@ function handleFileSelect(input) {
   renderFileChips();
 }
 
-/* ── Remove one file by its index in selectedFiles[] ─────────────────────── */
-
 function removeFile(index) {
   selectedFiles.splice(index, 1);
   syncInputFiles();
   renderFileChips();
 }
 
-/* ── Clear all selected files ────────────────────────────────────────────── */
-
 function clearFile() {
   selectedFiles = [];
   syncInputFiles();
   renderFileChips();
 }
-
-/* ── Render the chip list and update the button label ────────────────────── */
 
 function renderFileChips() {
   const label      = q('fileLabel');
@@ -554,7 +535,6 @@ function renderFileChips() {
   const clearBtn   = q('fileClearBtn');
   const listEl     = q('fileList');
 
-  /* ── Empty state ── */
   if (selectedFiles.length === 0) {
     if (label)      label.textContent = 'Choose Files';
     if (countBadge) countBadge.style.display = 'none';
@@ -564,17 +544,15 @@ function renderFileChips() {
     return;
   }
 
-  /* ── Populated state ── */
   if (label) label.textContent = selectedFiles.length < MAX_FILES ? 'Add More' : 'Max files reached';
   if (countBadge) {
-    countBadge.textContent = `${selectedFiles.length}/${MAX_FILES}`;
+    countBadge.textContent   = `${selectedFiles.length}/${MAX_FILES}`;
     countBadge.style.display = 'inline-flex';
   }
   if (btnWrap)  btnWrap.classList.add('has-file');
   if (clearBtn) clearBtn.style.display = 'flex';
   if (!listEl)  return;
 
-  /* Rebuild chip list every time (simple & safe for ≤4 items) */
   listEl.innerHTML = '';
 
   selectedFiles.forEach((file, i) => {
@@ -585,30 +563,25 @@ function renderFileChips() {
     chip.className = 'file-chip';
     chip.setAttribute('role', 'listitem');
 
-    /* Icon */
     const icon = document.createElement('span');
     icon.className   = 'file-chip-icon';
     icon.textContent = fileIcon(file.name);
     icon.setAttribute('aria-hidden', 'true');
 
-    /* Name */
     const name = document.createElement('span');
     name.className   = 'file-chip-name';
     name.textContent = safeName;
-    name.title       = file.name; // Full name on hover
+    name.title       = file.name;
 
-    /* Size */
     const size = document.createElement('span');
     size.className   = 'file-chip-size';
     size.textContent = `${sizeMB} MB`;
 
-    /* Remove button */
     const removeBtn = document.createElement('button');
     removeBtn.type      = 'button';
     removeBtn.className = 'file-chip-remove';
     removeBtn.setAttribute('aria-label', `Remove ${file.name}`);
     removeBtn.innerHTML = '&times;';
-    /* Capture index in closure */
     removeBtn.addEventListener('click', (function(idx) {
       return function() { removeFile(idx); };
     })(i));
@@ -621,12 +594,11 @@ function renderFileChips() {
   });
 }
 
-/* ── Contact Form — Validation + web3forms fire-and-forget submission ─────── */
+/* ── Contact Form ─────────────────────────────────────────────────────────── */
 
 (function () {
   'use strict';
 
-  /* ── Config: field ID → validation rule + error message ── */
   const RULES = {
     cName: {
       test: v => v.trim().length >= 2,
@@ -650,18 +622,15 @@ function renderFileChips() {
     },
   };
 
-  /* ── Helpers ── */
-  function getField(id)    { return document.getElementById(id); }
-  function getErrorEl(id)  { return document.getElementById(id + '-err'); }
+  function getField(id)   { return document.getElementById(id); }
+  function getErrorEl(id) { return document.getElementById(id + '-err'); }
 
   function showError(id, msg) {
     const field = getField(id);
     if (!field) return;
-
     field.classList.add('cf-invalid');
     field.setAttribute('aria-invalid', 'true');
     field.setAttribute('aria-describedby', id + '-err');
-
     let err = getErrorEl(id);
     if (!err) {
       err = document.createElement('span');
@@ -676,11 +645,9 @@ function renderFileChips() {
   function clearError(id) {
     const field = getField(id);
     if (!field) return;
-
     field.classList.remove('cf-invalid');
     field.removeAttribute('aria-invalid');
     field.removeAttribute('aria-describedby');
-
     const err = getErrorEl(id);
     if (err) err.textContent = '';
   }
@@ -690,7 +657,6 @@ function renderFileChips() {
     if (!field) return true;
     const rule = RULES[id];
     if (!rule)  return true;
-
     if (rule.test(field.value)) {
       clearError(id);
       return true;
@@ -700,31 +666,25 @@ function renderFileChips() {
     }
   }
 
-  /* ── Wire up real-time feedback (validate on blur, clear on input) ── */
   function attachListeners() {
     Object.keys(RULES).forEach(id => {
       const field = getField(id);
       if (!field) return;
-
-      /* Validate when user leaves the field */
-      field.addEventListener('blur', () => validateOne(id));
-
-      /* Clear the error as soon as the user starts correcting */
+      field.addEventListener('blur',   () => validateOne(id));
       field.addEventListener('input',  () => { if (field.classList.contains('cf-invalid')) validateOne(id); });
       field.addEventListener('change', () => { if (field.classList.contains('cf-invalid')) validateOne(id); });
     });
   }
 
-  /* ── Intercept submit ─────────────────────────────────────────────── */
   function attachSubmit() {
     const form = document.getElementById('contactForm');
     if (!form) return;
 
     form.addEventListener('submit', function (e) {
-      e.preventDefault(); // Always intercept — never let the browser navigate
+      e.preventDefault();
 
-      /* ── 1. Validate all fields ── */
-      let allValid         = true;
+      /* ── 1. Validate ── */
+      let allValid          = true;
       let firstInvalidField = null;
 
       Object.keys(RULES).forEach(id => {
@@ -737,51 +697,36 @@ function renderFileChips() {
 
       if (!allValid) {
         e.stopPropagation();
-        /* Scroll smoothly to the first broken field and focus it */
         if (firstInvalidField) {
           firstInvalidField.scrollIntoView({ behavior: 'smooth', block: 'center' });
           firstInvalidField.focus();
         }
-        return; // Stop — do not submit
+        return;
       }
 
-      /* ── 2. Show sending state immediately ── */
+      /* ── 2. Show sending state ── */
       const submitBtn = form.querySelector('.form-submit');
-      const successEl = document.getElementById('formSuccess');
-
       if (submitBtn) {
         submitBtn.disabled    = true;
         submitBtn.textContent = 'Sending…';
       }
 
-      /* ── 3. Fire to web3forms — do NOT await ── */
-      /* The request goes out instantly. We don't sit and wait for the   */
-      /* server reply — that's what was causing the 2-minute hang.       */
+      /* ── 3. Fire to web3forms, then redirect ── */
       const formData = new FormData(form);
 
       fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         body:   formData,
-      }).catch(err => console.error('[contactForm] web3forms error:', err));
-
-      /* ── 4. Reset form and show success right away ── */
-      form.reset();
-      clearFile(); // Reset the multi-file picker too
-
-      if (submitBtn) {
-        submitBtn.disabled    = false;
-        submitBtn.textContent = 'Send Message';
-      }
-
-      if (successEl) {
-        successEl.style.display = 'block';
-        successEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        setTimeout(() => { successEl.style.display = 'none'; }, 6000);
-      }
+      })
+        .catch(err => console.error('[contactForm] web3forms error:', err))
+        .finally(() => {
+          form.reset();
+          clearFile();
+          window.location.href = 'success.html';
+        });
     });
   }
 
-  /* ── Init ── */
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
