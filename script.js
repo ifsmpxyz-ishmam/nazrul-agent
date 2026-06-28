@@ -24,13 +24,9 @@ if (navbar) {
   window.addEventListener('scroll', () => {
     if (!ticking) {
       requestAnimationFrame(() => {
-        navbar.classList.toggle(
-          'scrolled',
-          window.scrollY > 60
-        );
+        navbar.classList.toggle('scrolled', window.scrollY > 60);
         ticking = false;
       });
-
       ticking = true;
     }
   }, { passive: true });
@@ -142,7 +138,6 @@ if (revealEls.length > 0 && 'IntersectionObserver' in window) {
         entry.target.classList.add('revealed');
         observer.unobserve(entry.target); // Unobserve after reveal; avoids unnecessary callbacks
       }
-    
     });
   }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
@@ -156,14 +151,8 @@ if (revealEls.length > 0 && 'IntersectionObserver' in window) {
 
 /**
  * Toggle a FAQ item open/closed.
- * Called by onclick="toggleFaq(this)" in index.html.
  * Also wired to keyboard events below.
  */
-qa('.faq-q').forEach(btn => {
-  btn.addEventListener('click', () => {
-    toggleFaq(btn);
-  });
-});
 
 
 // FIX: closing brace was misplaced after `if (!item) return;`, cutting the
@@ -304,10 +293,7 @@ async function submitReview() {
   submitBtn.disabled = true;
   submitBtn.innerHTML = '<span class="spinner"></span>Submitting...';
 
-  // FIX: The original fetch was split into disconnected statements:
-  //   - `url` was never defined
-  //   - `fetch(url, { signal })` was a separate fire-and-forget call
-  //   - `method`, `headers`, `body` were orphaned object literal syntax
+  // FIX: The original fetch was split into disconnected statements.
   // Fixed by combining everything into one properly structured fetch call.
   const controller = new AbortController();
   setTimeout(() => controller.abort(), 10000);
@@ -379,7 +365,6 @@ function buildReviewCard(review) {
   /* Card wrapper */
   const card = document.createElement('div');
   card.className = 'testimonial-card';
-  
   card.setAttribute('role', 'listitem');
 
   /* Stars */
@@ -401,13 +386,12 @@ function buildReviewCard(review) {
   avatar.textContent = initials;
   avatar.setAttribute('aria-hidden', 'true');
 
-  const info    = document.createElement('div');
-
-  const nameEl  = document.createElement('div');
+  const info   = document.createElement('div');
+  const nameEl = document.createElement('div');
   nameEl.className   = 'author-name';
   nameEl.textContent = review.name || 'Anonymous';
 
-  const compEl  = document.createElement('div');
+  const compEl = document.createElement('div');
   compEl.className   = 'author-company';
   compEl.textContent = review.company || '';
 
@@ -415,7 +399,6 @@ function buildReviewCard(review) {
   info.appendChild(compEl);
   author.appendChild(avatar);
   author.appendChild(info);
-
   card.appendChild(stars);
   card.appendChild(body);
   card.appendChild(author);
@@ -431,6 +414,14 @@ async function loadReviewsPreview() {
 
   try {
     const res = await fetch('/.netlify/functions/reviews');
+
+    /* FIX: 404 means the function isn't deployed yet (e.g. local dev).
+     * Exit silently instead of showing an error message to visitors.
+     */
+    if (res.status === 404) {
+      container.innerHTML = '';
+      return;
+    }
 
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
@@ -456,7 +447,8 @@ async function loadReviewsPreview() {
   } catch (err) {
     console.error('[loadReviewsPreview] Error:', err);
     /* FIX: reuse the already-captured `container` reference instead of
-     * re-querying the DOM with a confusingly named container2 variable. */
+     * re-querying the DOM with a confusingly named container2 variable.
+     */
     container.innerHTML = '';
     const msg = document.createElement('p');
     msg.className   = 'reviews-loading';
@@ -469,43 +461,34 @@ async function loadReviewsPreview() {
 if (q('reviews-preview')) {
   loadReviewsPreview();
 }
-/*
- * ══════════════════════════════════════════════════════════
- * STEP 2 — script.js
- * Find your existing handleFileSelect() and clearFile()
- * functions and REPLACE BOTH with everything below.
- * ══════════════════════════════════════════════════════════
- */
 
 /* ── Multi-file upload state ──────────────────────────────────────────────── */
 
-let   selectedFiles = [];   // Array of File objects tracked in memory
-const MAX_FILES     = 4;    // Maximum files allowed
-const MAX_BYTES     = 10 * 1024 * 1024;  // 10 MB per file
+let   selectedFiles = [];          // Array of File objects tracked in memory
+const MAX_FILES     = 4;           // Maximum files allowed
+const MAX_BYTES     = 10 * 1024 * 1024; // 10 MB per file
 
 /* ── Extension → emoji icon map ──────────────────────────────────────────── */
 
 function fileIcon(filename) {
   const ext = filename.split('.').pop().toLowerCase();
   if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext)) return '🖼';
-  if (ext === 'pdf') return '📄';
-  if (['doc', 'docx'].includes(ext)) return '📝';
+  if (ext === 'pdf')                                        return '📄';
+  if (['doc', 'docx'].includes(ext))                        return '📝';
   return '📎';
 }
 
-/* ── Write selectedFiles back into the real <input> via DataTransfer ──────── */
-/*    This ensures Netlify receives the files on form submit.                  */
+/* ── Write selectedFiles[] back into the real <input> via DataTransfer ───── */
+/*    This ensures web3forms receives the files on form submit.               */
 
 function syncInputFiles() {
-  const input = document.getElementById('cFile');
+  const input = q('cFile');
   if (!input) return;
   try {
     const dt = new DataTransfer();
     selectedFiles.forEach(f => dt.items.add(f));
     input.files = dt.files;
   } catch (e) {
-    /* DataTransfer assignment not supported in very old browsers — fail silently.
-     * Files are still tracked in selectedFiles[] for display purposes. */
     console.warn('[fileUpload] DataTransfer assignment not supported:', e.message);
   }
 }
@@ -565,24 +548,24 @@ function clearFile() {
 /* ── Render the chip list and update the button label ────────────────────── */
 
 function renderFileChips() {
-  const label    = document.getElementById('fileLabel');
-  const countBadge = document.getElementById('fileCount');
-  const btnWrap  = document.querySelector('.file-upload-btn');
-  const clearBtn = document.getElementById('fileClearBtn');
-  const listEl   = document.getElementById('fileList');
+  const label      = q('fileLabel');
+  const countBadge = q('fileCount');
+  const btnWrap    = qs('.file-upload-btn');
+  const clearBtn   = q('fileClearBtn');
+  const listEl     = q('fileList');
 
   /* ── Empty state ── */
   if (selectedFiles.length === 0) {
-    if (label)    label.textContent = 'Choose Files';
+    if (label)      label.textContent = 'Choose Files';
     if (countBadge) countBadge.style.display = 'none';
-    if (btnWrap)  btnWrap.classList.remove('has-file');
-    if (clearBtn) clearBtn.style.display = 'none';
-    if (listEl)   listEl.innerHTML = '';
+    if (btnWrap)    btnWrap.classList.remove('has-file');
+    if (clearBtn)   clearBtn.style.display = 'none';
+    if (listEl)     listEl.innerHTML = '';
     return;
   }
 
   /* ── Populated state ── */
-  if (label) label.textContent = 'Add More';
+  if (label) label.textContent = selectedFiles.length < MAX_FILES ? 'Add More' : 'Max files reached';
   if (countBadge) {
     countBadge.textContent = `${selectedFiles.length}/${MAX_FILES}`;
     countBadge.style.display = 'inline-flex';
@@ -612,7 +595,7 @@ function renderFileChips() {
     const name = document.createElement('span');
     name.className   = 'file-chip-name';
     name.textContent = safeName;
-    name.title       = file.name;   // Full name on hover
+    name.title       = file.name; // Full name on hover
 
     /* Size */
     const size = document.createElement('span');
@@ -637,9 +620,8 @@ function renderFileChips() {
     listEl.appendChild(chip);
   });
 }
-/* ─────────────────────────────────────────────
-   Contact Form Validation — Global Logistics Network
-───────────────────────────────────────────── */
+
+/* ── Contact Form — Validation + web3forms fire-and-forget submission ─────── */
 
 (function () {
   'use strict';
@@ -707,7 +689,7 @@ function renderFileChips() {
     const field = getField(id);
     if (!field) return true;
     const rule = RULES[id];
-    if (!rule) return true;
+    if (!rule)  return true;
 
     if (rule.test(field.value)) {
       clearError(id);
@@ -733,13 +715,16 @@ function renderFileChips() {
     });
   }
 
-  /* ── Intercept submit ── */
+  /* ── Intercept submit ─────────────────────────────────────────────── */
   function attachSubmit() {
     const form = document.getElementById('contactForm');
     if (!form) return;
 
     form.addEventListener('submit', function (e) {
-      let allValid = true;
+      e.preventDefault(); // Always intercept — never let the browser navigate
+
+      /* ── 1. Validate all fields ── */
+      let allValid         = true;
       let firstInvalidField = null;
 
       Object.keys(RULES).forEach(id => {
@@ -751,14 +736,47 @@ function renderFileChips() {
       });
 
       if (!allValid) {
-        e.preventDefault();           /* Stop submission */
         e.stopPropagation();
-
         /* Scroll smoothly to the first broken field and focus it */
         if (firstInvalidField) {
           firstInvalidField.scrollIntoView({ behavior: 'smooth', block: 'center' });
           firstInvalidField.focus();
         }
+        return; // Stop — do not submit
+      }
+
+      /* ── 2. Show sending state immediately ── */
+      const submitBtn = form.querySelector('.form-submit');
+      const successEl = document.getElementById('formSuccess');
+
+      if (submitBtn) {
+        submitBtn.disabled    = true;
+        submitBtn.textContent = 'Sending…';
+      }
+
+      /* ── 3. Fire to web3forms — do NOT await ── */
+      /* The request goes out instantly. We don't sit and wait for the   */
+      /* server reply — that's what was causing the 2-minute hang.       */
+      const formData = new FormData(form);
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body:   formData,
+      }).catch(err => console.error('[contactForm] web3forms error:', err));
+
+      /* ── 4. Reset form and show success right away ── */
+      form.reset();
+      clearFile(); // Reset the multi-file picker too
+
+      if (submitBtn) {
+        submitBtn.disabled    = false;
+        submitBtn.textContent = 'Send Message';
+      }
+
+      if (successEl) {
+        successEl.style.display = 'block';
+        successEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        setTimeout(() => { successEl.style.display = 'none'; }, 6000);
       }
     });
   }
@@ -774,4 +792,5 @@ function renderFileChips() {
     attachListeners();
     attachSubmit();
   }
+
 })();
