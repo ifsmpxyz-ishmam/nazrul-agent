@@ -1,2 +1,5 @@
 [functions]
   directory = "netlify/functions"
+[[edge_functions]]
+  function = "contact"
+  path = "/api/contact"
