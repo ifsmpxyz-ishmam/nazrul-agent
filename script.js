@@ -596,6 +596,10 @@ function renderFileChips() {
 
 /* ── Contact Form ─────────────────────────────────────────────────────────── */
 
+/* ── Contact Form ─────────────────────────────────────────────────────────── */
+
+/* ── Contact Form ─────────────────────────────────────────────────────────── */
+
 (function () {
   'use strict';
 
@@ -676,66 +680,9 @@ function renderFileChips() {
     });
   }
 
-  function attachSubmit() {
-    const form = document.getElementById('contactForm');
-    if (!form) return;
-
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      /* ── 1. Validate ── */
-      let allValid          = true;
-      let firstInvalidField = null;
-
-      Object.keys(RULES).forEach(id => {
-        const ok = validateOne(id);
-        if (!ok) {
-          allValid = false;
-          if (!firstInvalidField) firstInvalidField = getField(id);
-        }
-      });
-
-      if (!allValid) {
-        e.stopPropagation();
-        if (firstInvalidField) {
-          firstInvalidField.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          firstInvalidField.focus();
-        }
-        return;
-      }
-
-      /* ── 2. Show sending state ── */
-      const submitBtn = form.querySelector('.form-submit');
-      if (submitBtn) {
-        submitBtn.disabled    = true;
-        submitBtn.textContent = 'Sending…';
-      }
-
-      /* ── 3. Fire to web3forms, then redirect ── */
-      const formData = new FormData(form);
-
-      fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        body:   formData,
-      })
-        .catch(err => console.error('[contactForm] web3forms error:', err))
-        .finally(() => {
-          form.reset();
-          clearFile();
-          window.location.href = 'success.html';
-        });
-    });
-  }
-
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
     init();
   }
-
-  function init() {
-    attachListeners();
-    attachSubmit();
-  }
-
 })();
