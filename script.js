@@ -470,10 +470,10 @@ const MAX_BYTES     = 10 * 1024 * 1024;
 
 function fileIcon(filename) {
   const ext = filename.split('.').pop().toLowerCase();
-  if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext)) return '🖼';
-  if (ext === 'pdf')                                        return '📄';
-  if (['doc', 'docx'].includes(ext))                        return '📝';
-  return '📎';
+  if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext)) return '';
+  if (ext === 'pdf')                                        return '';
+  if (['doc', 'docx'].includes(ext))                        return '';
+  return '';
 }
 
 function syncInputFiles() {
@@ -596,34 +596,15 @@ function renderFileChips() {
 
 /* ── Contact Form ─────────────────────────────────────────────────────────── */
 
-/* ── Contact Form ─────────────────────────────────────────────────────────── */
-
-/* ── Contact Form ─────────────────────────────────────────────────────────── */
-
 (function () {
   'use strict';
 
   const RULES = {
-    cName: {
-      test: v => v.trim().length >= 2,
-      msg:  'Please enter your full name (at least 2 characters).',
-    },
-    cPhone: {
-      test: v => /^[0-9]{11}$/.test(v.trim()),
-      msg:  'Please enter a valid 11-digit phone number.',
-    },
-    cEmail: {
-      test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()),
-      msg:  'Please enter a valid email address.',
-    },
-    cService: {
-      test: v => v.trim() !== '',
-      msg:  'Please select the service you need.',
-    },
-    cMessage: {
-      test: v => v.trim().length >= 10,
-      msg:  'Please describe your request (at least 10 characters).',
-    },
+    cName:    { test: v => v.trim().length >= 2,                          msg: 'Please enter your full name (at least 2 characters).' },
+    cPhone:   { test: v => /^[0-9]{11}$/.test(v.trim()),                  msg: 'Please enter a valid 11-digit phone number.' },
+    cEmail:   { test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()),   msg: 'Please enter a valid email address.' },
+    cService: { test: v => v.trim() !== '',                                msg: 'Please select the service you need.' },
+    cMessage: { test: v => v.trim().length >= 10,                          msg: 'Please describe your request (at least 10 characters).' },
   };
 
   function getField(id)   { return document.getElementById(id); }
@@ -661,13 +642,9 @@ function renderFileChips() {
     if (!field) return true;
     const rule = RULES[id];
     if (!rule)  return true;
-    if (rule.test(field.value)) {
-      clearError(id);
-      return true;
-    } else {
-      showError(id, rule.msg);
-      return false;
-    }
+    if (rule.test(field.value)) { clearError(id); return true; }
+    showError(id, rule.msg);
+    return false;
   }
 
   function attachListeners() {
@@ -680,9 +657,56 @@ function renderFileChips() {
     });
   }
 
+  function attachSubmit() {
+    const form = document.getElementById('contactForm');
+    if (!form) return;
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      /* 1. Validate */
+      let allValid = true, firstInvalid = null;
+      Object.keys(RULES).forEach(id => {
+        const ok = validateOne(id);
+        if (!ok) { allValid = false; if (!firstInvalid) firstInvalid = getField(id); }
+      });
+      if (!allValid) {
+        e.stopPropagation();
+        if (firstInvalid) { firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' }); firstInvalid.focus(); }
+        return;
+      }
+
+      /* 2. Show sending state */
+      const submitBtn = form.querySelector('.form-submit');
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Sending…'; }
+
+      /* 3. Submit to edge function and wait for real confirmation */
+      try {
+        const res  = await fetch('/api/contact', { method: 'POST', body: new FormData(form) });
+        const data = await res.json().catch(() => ({}));
+
+        if (res.ok && data.success) {
+          window.location.href = '/success.html';
+          return;
+        }
+        throw new Error(data.error || `Error ${res.status}`);
+
+      } catch (err) {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Send Message'; }
+        alert(err.message || 'Something went wrong. Please try again or contact us via WhatsApp.');
+      }
+    });
+  }
+
+  function init() {
+    attachListeners();
+    attachSubmit();
+  }
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
     init();
   }
+
 })();
