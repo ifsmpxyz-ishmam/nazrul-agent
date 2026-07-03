@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nazrul Islam Chowdhury — Licensed C&amp;F Agent | Chittagong Port</title>
-  <meta name="description" content="Nazrul Islam Chowdhury — Licensed Customs Clearing &amp; Forwarding Agent at Chittagong Port with 19+ years experience. Fast import/export clearance, documentation, and HS classification.">
+  <title>Nazrul Islam Choudhury — Licensed C&amp;F Agent | Chittagong Port</title>
+  <meta name="description" content="Nazrul Islam Choudhury — Licensed Customs Clearing &amp; Forwarding Agent at Chittagong Port with 19+ years experience. Fast import/export clearance, documentation, and HS classification.">
   <meta name="robots" content="index, follow">
-  <meta name="author"  content="Nazrul Islam Chowdhury">
+  <meta name="author"  content="Nazrul Islam Choudhury">
   <meta name="theme-color" content="#0a193c">
 
   <!-- FIX 1: canonical URL was missing quotes around the href value -->
@@ -506,19 +506,8 @@
             Removed the extra orphan </div> that was after </form>.
           -->
           <div class="contact-form-wrap">
-            <form
-              class="contact-form"
-              id="contactForm"
-              action="/netlify/edge-functions/contact.js"
-              method="POST"
-              enctype="multipart/form-data"
-            >
-              
-              <input type="hidden" name="subject" value="New Contact — Global Logistics Network">
-              <input type="hidden" name="redirect" value="https://gln-xyz.netlify.app/success.html">
-              <!-- Web3Forms built-in honeypot -->
-              <input type="checkbox" name="botcheck" style="display:none;" aria-hidden="true">
-
+            <form class="contact-form" id="contactForm" enctype="multipart/form-data">
+             <input type="text" name="bot-field" style="display:none;" tabindex="-1" autocomplete="off" aria-hidden="true">
               <div class="form-row">
                 <div class="form-group">
                   <label for="cName">Your Name <span aria-hidden="true">*</span></label>
